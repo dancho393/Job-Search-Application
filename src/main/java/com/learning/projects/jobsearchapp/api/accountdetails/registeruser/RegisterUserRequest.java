@@ -1,14 +1,13 @@
-package com.learning.projects.jobsearchapp.api.accountdetails.register;
+package com.learning.projects.jobsearchapp.api.accountdetails.registeruser;
 
 import com.learning.projects.jobsearchapp.api.base.OperationRequest;
 
-public record RegisterRequest(
+public record RegisterUserRequest(
          String username,
          String password,
          String name,
          String address,
          String phoneNumber,
-         String city,
-         String accountType
+         String city
 )implements OperationRequest {
 }
