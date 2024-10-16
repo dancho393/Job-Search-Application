@@ -1,4 +1,4 @@
-package com.learning.projects.jobsearchapp.entity;
+package com.learning.projects.jobsearchapp.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

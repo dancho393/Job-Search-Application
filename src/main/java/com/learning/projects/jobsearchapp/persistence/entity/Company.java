@@ -1,4 +1,4 @@
-package com.learning.projects.jobsearchapp.entity;
+package com.learning.projects.jobsearchapp.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +17,8 @@ public class Company  {
     @GeneratedValue(strategy = GenerationType.UUID)
 
     private UUID id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_details_id", referencedColumnName = "id")
     private AccountDetails accountDetails;
     private int employeeCount;
     private Float rating;

@@ -1,4 +1,4 @@
-package com.learning.projects.jobsearchapp.entity;
+package com.learning.projects.jobsearchapp.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,8 +14,11 @@ import java.util.UUID;
 @Builder
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+
     private UUID id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_details_id", referencedColumnName = "id")
     private AccountDetails accountDetails;
     @OneToMany(mappedBy = "applicant")
     private Set<Application> applications;

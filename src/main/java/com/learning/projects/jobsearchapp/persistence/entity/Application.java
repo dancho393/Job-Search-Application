@@ -1,6 +1,6 @@
-        package com.learning.projects.jobsearchapp.entity;
+        package com.learning.projects.jobsearchapp.persistence.entity;
 
-        import com.learning.projects.jobsearchapp.entity.constants.ApplicationStatus;
+        import com.learning.projects.jobsearchapp.persistence.entity.constants.ApplicationStatus;
         import jakarta.persistence.*;
         import lombok.*;
 
