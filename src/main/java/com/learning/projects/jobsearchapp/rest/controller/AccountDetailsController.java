@@ -3,6 +3,9 @@ package com.learning.projects.jobsearchapp.rest.controller;
 import com.learning.projects.jobsearchapp.api.accountdetails.login.LoginOperation;
 import com.learning.projects.jobsearchapp.api.accountdetails.login.LoginRequest;
 import com.learning.projects.jobsearchapp.api.accountdetails.login.LoginResponse;
+import com.learning.projects.jobsearchapp.api.accountdetails.registercompany.RegisterCompanyOperation;
+import com.learning.projects.jobsearchapp.api.accountdetails.registercompany.RegisterCompanyRequest;
+import com.learning.projects.jobsearchapp.api.accountdetails.registercompany.RegisterCompanyResponse;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserOperation;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserRequest;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserResponse;
@@ -19,10 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountDetailsController {
     private final RegisterUserOperation registerUserOperation;
     private final LoginOperation loginOperation;
-    @PostMapping("/register")
-    public ResponseEntity<RegisterUserResponse> register(
-           @RequestBody RegisterUserRequest registerRequest) {
+    private final RegisterCompanyOperation registerCompanyOperation;
+    @PostMapping("/registeruser")
+    public ResponseEntity<RegisterUserResponse> registerUser(
+            @RequestBody RegisterUserRequest registerRequest) {
         return ResponseEntity.status(201).body(registerUserOperation.process(registerRequest));
+    }
+
+    @PostMapping("/registercompany")
+    public ResponseEntity<RegisterCompanyResponse> registerCompany(
+            @RequestBody RegisterCompanyRequest registerRequest) {
+        return ResponseEntity.status(201).body(registerCompanyOperation.process(registerRequest));
     }
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(
