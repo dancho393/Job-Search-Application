@@ -1,5 +1,6 @@
 package com.learning.projects.jobsearchapp.core.accountdetails;
 
+import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserOperation;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserRequest;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserResponse;
 import com.learning.projects.jobsearchapp.api.mapper.accountdetails.registeruser.RegisterUserAccountDetailsMapper;
@@ -17,7 +18,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class RegisterUserOperation implements com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserOperation {
+public class RegisterUserService implements RegisterUserOperation {
     private final AccountDetailsRepository accountDetailsRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

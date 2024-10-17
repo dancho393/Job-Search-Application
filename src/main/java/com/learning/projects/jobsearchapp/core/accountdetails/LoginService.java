@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LoginOperationIMPL implements LoginOperation {
+public class LoginService implements LoginOperation {
     private final AccountDetailsRepository accountDetailsRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;

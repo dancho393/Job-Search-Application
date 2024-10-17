@@ -1,5 +1,6 @@
 package com.learning.projects.jobsearchapp.core.accountdetails;
 
+import com.learning.projects.jobsearchapp.api.accountdetails.registercompany.RegisterCompanyOperation;
 import com.learning.projects.jobsearchapp.api.accountdetails.registercompany.RegisterCompanyRequest;
 import com.learning.projects.jobsearchapp.api.accountdetails.registercompany.RegisterCompanyResponse;
 
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RegisterCompanyOperation implements com.learning.projects.jobsearchapp.api.accountdetails.registercompany.RegisterCompanyOperation {
+public class RegisterCompanyService implements RegisterCompanyOperation {
     private final AccountDetailsRepository accountDetailsRepository;
     private final CompanyRepository companyRepository;
     private final PasswordEncoder passwordEncoder;
