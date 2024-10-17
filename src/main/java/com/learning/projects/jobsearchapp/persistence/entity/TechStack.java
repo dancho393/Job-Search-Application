@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -22,5 +23,5 @@ public class TechStack {
     private String description;
     private String image;
     @ManyToMany(mappedBy = "techStacks")
-    private HashSet<JobPoster> jobPosters = new HashSet<>();
+    private Set<JobPoster> jobPosters = new HashSet<>();
 }
