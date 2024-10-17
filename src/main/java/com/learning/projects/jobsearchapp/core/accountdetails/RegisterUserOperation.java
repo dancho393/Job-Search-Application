@@ -1,11 +1,11 @@
 package com.learning.projects.jobsearchapp.core.accountdetails;
 
-import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserOperation;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserRequest;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserResponse;
+import com.learning.projects.jobsearchapp.api.mapper.accountdetails.registeruser.RegisterUserAccountDetailsMapper;
 import com.learning.projects.jobsearchapp.persistence.entity.AccountDetails;
+import com.learning.projects.jobsearchapp.persistence.entity.Application;
 import com.learning.projects.jobsearchapp.persistence.entity.User;
-import com.learning.projects.jobsearchapp.persistence.entity.constants.AccountDetailsType;
 import com.learning.projects.jobsearchapp.persistence.repository.AccountDetailsRepository;
 import com.learning.projects.jobsearchapp.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,36 +13,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class RegistraterUseroperation implements RegisterUserOperation {
+public class RegisterUserOperation implements com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserOperation {
     private final AccountDetailsRepository accountDetailsRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RegisterUserAccountDetailsMapper mapper;
 
     @Override
     public RegisterUserResponse process(RegisterUserRequest request) {
-        AccountDetails accountDetails = AccountDetails.builder()
-                .name(request.name())
-                .password(passwordEncoder.encode(request.password()))
-                .city(request.city())
-                .address(request.address())
-                .phoneNumber(request.phoneNumber())
-                .username(request.username())
-                .accountType(AccountDetailsType.USER)
-                .build();
+        AccountDetails accountDetails = mapper.toAccountDetails(request);
 
-        User user = User.builder()
-                .accountDetails(accountDetails)
-                .applications(new HashSet<>())
-                .build();
+        accountDetails.setPassword(getEncryptedPassword(request.password()));
 
-        accountDetails.setUser(user);
         accountDetailsRepository.save(accountDetails);
+
+        Set<Application> applications = new HashSet<>();
+        User user = (User) mapper.toUser(accountDetails);
 
         userRepository.save(user);
 
-        return new RegisterUserResponse("Created User");
+        return mapper.toRegisterUserResponse(accountDetails);
+    }
+
+    private String getEncryptedPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }
