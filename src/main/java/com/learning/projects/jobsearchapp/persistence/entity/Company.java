@@ -3,6 +3,7 @@ package com.learning.projects.jobsearchapp.persistence.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 @Entity
@@ -24,7 +25,7 @@ public class Company  {
     private Float rating;
 
     @OneToMany(mappedBy = "company")
-    private Set<JobPoster> jobPosters;
+    private Set<JobPoster> jobPosters = new HashSet<>();
 
 
 }

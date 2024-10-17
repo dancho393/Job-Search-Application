@@ -30,7 +30,7 @@ public class JobPoster {
             joinColumns = @JoinColumn(name = "jobposter_id"), // JobPoster side join column
             inverseJoinColumns = @JoinColumn(name = "techstack_id") // TechStack side join column
     )
-    private Set<TechStack> techStacks;
+    private Set<TechStack> techStacks = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "company_id")
