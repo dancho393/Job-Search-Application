@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.Set;
 import java.util.UUID;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -15,11 +16,12 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-
     private UUID id;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_details_id", referencedColumnName = "id")
     private AccountDetails accountDetails;
+
     @OneToMany(mappedBy = "applicant")
     private Set<Application> applications;
 }
