@@ -25,7 +25,7 @@ public interface RegisterCompanyAccountDetailsMapper {
     RegisterCompanyResponse toRegisterCompanyResponse(AccountDetails accountDetails);
 
     @Mappings({
-            @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID())"),
+            @Mapping(target = "id", ignore = true),
             @Mapping(target = "accountDetails", source = "accountDetails") ,
             @Mapping(target = "employeeCount", source = "employeeCount"),
             @Mapping(target = "rating", constant = "0.0f")
