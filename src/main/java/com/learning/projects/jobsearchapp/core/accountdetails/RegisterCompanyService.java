@@ -12,12 +12,15 @@ import com.learning.projects.jobsearchapp.persistence.entity.AccountDetails;
 import com.learning.projects.jobsearchapp.persistence.entity.Company;
 import com.learning.projects.jobsearchapp.persistence.repository.AccountDetailsRepository;
 import com.learning.projects.jobsearchapp.persistence.repository.CompanyRepository;
+import com.learning.projects.jobsearchapp.rest.exception.EntityAlreadyExistsException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+
 public class RegisterCompanyService implements RegisterCompanyOperation {
     private final AccountDetailsRepository accountDetailsRepository;
     private final CompanyRepository companyRepository;
@@ -27,7 +30,9 @@ public class RegisterCompanyService implements RegisterCompanyOperation {
     private final CheckIfEmailExistsOperation checkIfEmailExistsOperation;
 
     @Override
-    public RegisterCompanyResponse process(RegisterCompanyRequest request) {
+    @Transactional
+    public RegisterCompanyResponse process(RegisterCompanyRequest request)  {
+
         checkIfUsernameExistsOperation.process(new CheckIfUsernameExistsRequest(request.username()));
         checkIfEmailExistsOperation.process(new CheckIfEmailExistsRequest(request.email()));
 
