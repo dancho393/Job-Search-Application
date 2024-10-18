@@ -1,5 +1,9 @@
 package com.learning.projects.jobsearchapp.core.accountdetails;
 
+import com.learning.projects.jobsearchapp.api.accountdetails.checkifemailexists.CheckIfEmailExistsOperation;
+import com.learning.projects.jobsearchapp.api.accountdetails.checkifemailexists.CheckIfEmailExistsRequest;
+import com.learning.projects.jobsearchapp.api.accountdetails.checkifusernameexists.CheckIfUsernameExistsOperation;
+import com.learning.projects.jobsearchapp.api.accountdetails.checkifusernameexists.CheckIfUsernameExistsRequest;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserOperation;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserRequest;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserResponse;
@@ -23,17 +27,22 @@ public class RegisterUserService implements RegisterUserOperation {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RegisterUserAccountDetailsMapper mapper;
+    private final CheckIfUsernameExistsOperation checkIfUsernameExistsOperation;
+    private final CheckIfEmailExistsOperation checkIfEmailExistsOperation;
 
     @Override
     public RegisterUserResponse process(RegisterUserRequest request) {
-        AccountDetails accountDetails = mapper.toAccountDetails(request);
 
+        checkIfUsernameExistsOperation.process(new CheckIfUsernameExistsRequest(request.username()));
+        checkIfEmailExistsOperation.process(new CheckIfEmailExistsRequest(request.email()));
+
+        AccountDetails accountDetails = mapper.toAccountDetails(request);
         accountDetails.setPassword(getEncryptedPassword(request.password()));
 
         accountDetailsRepository.save(accountDetails);
 
         Set<Application> applications = new HashSet<>();
-        User user = (User) mapper.toUser(accountDetails);
+        User user = mapper.toUser(accountDetails);
 
         userRepository.save(user);
 

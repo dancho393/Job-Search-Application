@@ -15,6 +15,7 @@ public interface RegisterUserAccountDetailsMapper {
             @Mapping(target = "id", source = "id"),
             @Mapping(target = "username", source = "username"),
             @Mapping(target = "name", source = "name"),
+            @Mapping(target = "email", source = "email"),
             @Mapping(target = "address", source = "address"),
             @Mapping(target = "phoneNumber", source = "phoneNumber"),
             @Mapping(target = "city", source = "city"),
@@ -31,6 +32,7 @@ public interface RegisterUserAccountDetailsMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "username", source = "request.username")
     @Mapping(target = "name", source = "request.name")
+    @Mapping(target = "email" , source = "request.email")
     @Mapping(target = "address", source = "request.address")
     @Mapping(target = "phoneNumber", source = "request.phoneNumber")
     @Mapping(target = "city", source = "request.city")
