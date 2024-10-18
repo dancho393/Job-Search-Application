@@ -4,6 +4,8 @@ import com.learning.projects.jobsearchapp.api.accountdetails.checkifemailexists.
 import com.learning.projects.jobsearchapp.api.accountdetails.checkifemailexists.CheckIfEmailExistsRequest;
 import com.learning.projects.jobsearchapp.api.accountdetails.checkifusernameexists.CheckIfUsernameExistsResponse;
 import com.learning.projects.jobsearchapp.persistence.repository.AccountDetailsRepository;
+import com.learning.projects.jobsearchapp.rest.exception.EntityAllreadyExists;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,11 @@ public class CheckIfEmailExistsService implements CheckIfEmailExistsOperation {
     private final AccountDetailsRepository accountDetailsRepository;
 
     @Override
-    public CheckIfUsernameExistsResponse process(CheckIfEmailExistsRequest request) {
+    public CheckIfUsernameExistsResponse process(CheckIfEmailExistsRequest request) throws EntityAllreadyExists {
         String email = request.email();
 
         if (accountDetailsRepository.existsByEmail(email)) {
-            throw new RuntimeException("Email '" + email + "' already exists.");
+            throw new EntityAllreadyExists("Email '" + email + "' already exists.");
         }
 
         return new CheckIfUsernameExistsResponse(false);
