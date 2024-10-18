@@ -2,5 +2,7 @@ package com.learning.projects.jobsearchapp.persistence.entity.constants;
 
 public enum ApplicationStatus {
     APPLIED,
-    VIEWED
+    VIEWED,
+    REJECTED,
+    INVITED_TO_INTERVIEW
 }

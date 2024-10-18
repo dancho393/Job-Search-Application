@@ -26,6 +26,7 @@ public class JobPosterController {
             @RequestBody CreateJobPosterRequest request,
             @AuthenticationPrincipal AccountDetails accountDetails
     ) {
+
         request.setAccountDetails(accountDetails);
         return ResponseEntity.status(201).body(createJobPosterOperation.process(request));
     }
