@@ -8,6 +8,7 @@ public record RegisterUserResponse(
         UUID id,
         String username,
         String name,
+        String email,
         String address,
         String phoneNumber,
         String city,

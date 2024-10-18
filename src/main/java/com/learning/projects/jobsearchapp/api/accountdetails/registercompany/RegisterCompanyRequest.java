@@ -6,6 +6,7 @@ public record RegisterCompanyRequest (
         String username,
         String password,
         String name,
+        String email,
         String address,
         String phoneNumber,
         String city,
