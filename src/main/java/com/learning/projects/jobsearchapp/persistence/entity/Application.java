@@ -3,7 +3,9 @@
         import com.learning.projects.jobsearchapp.persistence.entity.constants.ApplicationStatus;
         import jakarta.persistence.*;
         import lombok.*;
+        import org.hibernate.annotations.CreationTimestamp;
 
+        import java.time.LocalDateTime;
         import java.util.UUID;
 
         @Entity
@@ -24,6 +26,9 @@
             @ManyToOne
             @JoinColumn(name = "jobposter_id")
             private JobPoster jobPoster;
+
+
+            private LocalDateTime applicationDateTime;
 
             @Enumerated(EnumType.STRING)
             private ApplicationStatus status;
