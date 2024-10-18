@@ -9,6 +9,8 @@ import com.learning.projects.jobsearchapp.api.accountdetails.registercompany.Reg
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserOperation;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserRequest;
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserResponse;
+
+import com.learning.projects.jobsearchapp.rest.exception.EntityAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +27,7 @@ public class AccountDetailsController {
     private final RegisterCompanyOperation registerCompanyOperation;
     @PostMapping("/registeruser")
     public ResponseEntity<RegisterUserResponse> registerUser(
-            @RequestBody RegisterUserRequest registerRequest) {
+            @RequestBody RegisterUserRequest registerRequest)  {
         return ResponseEntity.status(201).body(registerUserOperation.process(registerRequest));
     }
 

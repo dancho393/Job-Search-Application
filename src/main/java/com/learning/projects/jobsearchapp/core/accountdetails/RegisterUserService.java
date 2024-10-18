@@ -9,16 +9,16 @@ import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.Regist
 import com.learning.projects.jobsearchapp.api.accountdetails.registeruser.RegisterUserResponse;
 import com.learning.projects.jobsearchapp.api.mapper.accountdetails.registeruser.RegisterUserAccountDetailsMapper;
 import com.learning.projects.jobsearchapp.persistence.entity.AccountDetails;
-import com.learning.projects.jobsearchapp.persistence.entity.Application;
+
 import com.learning.projects.jobsearchapp.persistence.entity.User;
 import com.learning.projects.jobsearchapp.persistence.repository.AccountDetailsRepository;
 import com.learning.projects.jobsearchapp.persistence.repository.UserRepository;
+
+import com.learning.projects.jobsearchapp.rest.exception.EntityAlreadyExistsException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +31,8 @@ public class RegisterUserService implements RegisterUserOperation {
     private final CheckIfEmailExistsOperation checkIfEmailExistsOperation;
 
     @Override
-    public RegisterUserResponse process(RegisterUserRequest request) {
+    @Transactional
+    public RegisterUserResponse process(RegisterUserRequest request)   {
 
         checkIfUsernameExistsOperation.process(new CheckIfUsernameExistsRequest(request.username()));
         checkIfEmailExistsOperation.process(new CheckIfEmailExistsRequest(request.email()));
@@ -41,7 +42,6 @@ public class RegisterUserService implements RegisterUserOperation {
 
         accountDetailsRepository.save(accountDetails);
 
-        Set<Application> applications = new HashSet<>();
         User user = mapper.toUser(accountDetails);
 
         userRepository.save(user);

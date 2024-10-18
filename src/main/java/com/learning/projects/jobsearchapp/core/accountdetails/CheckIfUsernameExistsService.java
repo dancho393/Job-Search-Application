@@ -4,7 +4,8 @@ import com.learning.projects.jobsearchapp.api.accountdetails.checkifusernameexis
 import com.learning.projects.jobsearchapp.api.accountdetails.checkifusernameexists.CheckIfUsernameExistsRequest;
 import com.learning.projects.jobsearchapp.api.accountdetails.checkifusernameexists.CheckIfUsernameExistsResponse;
 import com.learning.projects.jobsearchapp.persistence.repository.AccountDetailsRepository;
-import com.learning.projects.jobsearchapp.rest.exception.EntityAllreadyExists;
+
+import com.learning.projects.jobsearchapp.rest.exception.EntityAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,11 @@ public class CheckIfUsernameExistsService implements CheckIfUsernameExistsOperat
     private final AccountDetailsRepository accountDetailsRepository;
 
     @Override
-    public CheckIfUsernameExistsResponse process(CheckIfUsernameExistsRequest request) throws EntityAllreadyExists {
+    public CheckIfUsernameExistsResponse process(CheckIfUsernameExistsRequest request) throws EntityAlreadyExistsException {
         String username = request.username();
-
+        
         if (accountDetailsRepository.existsByUsername(username)) {
-            throw new EntityAllreadyExists("Username '" + username + "' already exists.");
+            throw new EntityAlreadyExistsException("Username '" + username + "' already exists.");
         }
 
         return new CheckIfUsernameExistsResponse(false);
