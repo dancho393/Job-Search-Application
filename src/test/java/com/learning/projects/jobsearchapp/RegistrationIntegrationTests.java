@@ -17,14 +17,12 @@ import static org.hamcrest.Matchers.notNullValue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 @ActiveProfiles("jordan-test")
-class JobSearchAppApplicationTests {
+class RegistrationIntegrationTests {
 
     @Container
     private static final PostgreSQLContainer<?> postgreSQLContainer =
-            new PostgreSQLContainer<>("postgres:16-alpine")
-                    .withDatabaseName("jobsearch-test-env")
-                    .withUsername("postgres")
-                    .withPassword("maxcrysis1");
+            new PostgreSQLContainer<>("postgres:16-alpine");
+
 
     @LocalServerPort
     private Integer port;
@@ -71,6 +69,30 @@ class JobSearchAppApplicationTests {
                 .body("email",equalTo("kbc@abv.bg"))
                 .body("rating",equalTo(0.0F))
                 .body("message",equalTo("Company registered successfully"));
+    }
+    @Test
+    void shouldRegisterCompanyGetExceptionForExistingUsername(){
+        String registerRequest = "{\n" +
+                "  \"username\": \"john_doe\",\n" +
+                "  \"password\": \"123456\",\n" +
+                "  \"email\":\"john.doe@example.com\",\n" +
+                "  \"name\": \"John doe\",\n" +
+                "  \"address\": \"123 Main St, Cityville\",\n" +
+                "  \"phoneNumber\": \"+1234567890\",\n" +
+                "  \"city\": \"Cityville\",\n" +
+                "  \"employeeCount\":\"1500\"\n" +
+                "}";
+
+        String url = "/api/v1/auth/registercompany";
+        //doesnt matter if it company or user repetitive usernames
+        // should not enter database
+        RestAssured.given()
+                .contentType("application/json")
+                .body(registerRequest)
+                .when()
+                .post(url)
+                .then()
+                .statusCode(409);
     }
 
 
