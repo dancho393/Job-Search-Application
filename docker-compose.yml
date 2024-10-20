@@ -1,0 +1,11 @@
+version: '4'
+services:
+  mysql:
+    image: postgres:11-alpine
+    container_name: test-db-postgres
+    restart: always
+    environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=maxcrysis1
+    ports:
+      - "3308:3306"
