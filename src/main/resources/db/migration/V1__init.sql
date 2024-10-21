@@ -61,4 +61,5 @@ CREATE TABLE IF NOT EXISTS jobposter_techstack (
     );
 
 INSERT INTO account_details (id, username, password, name, email, address, phone_number, city, account_type)
-VALUES ('b3e56f5e-2a58-4a91-8194-ecc233cf4956', 'john_doe', 'password123', 'John Doe', 'john.doe@example.com', '123 Main St', '+1234567890', 'Leuven', 'user');
+VALUES ('b3e56f5e-2a58-4a91-8194-ecc233cf4956', 'john_doe', '$2a$10$ro/mUzAnvooEAxwH9IBdXuibsQM94tV7auni4X4mULf9xCg8HoZeG', 'John Doe', 'john.doe@example.com', '123 Main St', '+1234567890', 'Leuven', 'USER');
+--this is the encrypted password

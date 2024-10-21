@@ -27,6 +27,8 @@ public class LoginService implements LoginOperation {
         );
         var user = accountDetailsRepository.findByUsername(request.username())
                 .orElseThrow(()->new EntityNotFoundException("User Not Found"));
+
+
         var jwtToken =jwtService.generateToken(user);
         return new LoginResponse(jwtToken);
     }

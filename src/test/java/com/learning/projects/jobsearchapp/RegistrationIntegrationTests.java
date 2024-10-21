@@ -34,8 +34,6 @@ class RegistrationIntegrationTests {
 
     static {
         postgreSQLContainer.start();
-
-
     }
     @Test
     void shouldRegisterCompany(){
@@ -86,6 +84,28 @@ class RegistrationIntegrationTests {
         String url = "/api/v1/auth/registercompany";
         //doesnt matter if it company or user repetitive usernames
         // should not enter database
+        RestAssured.given()
+                .contentType("application/json")
+                .body(registerRequest)
+                .when()
+                .post(url)
+                .then()
+                .statusCode(409);
+    }
+    @Test
+    void shouldRegisterUserGetExceptionForExistingEmail(){
+        String registerRequest = "{\n" +
+                "  \"username\": \"jane_doe\",\n" +
+                "  \"password\": \"123456\",\n" +
+                "  \"email\": \"john.doe@example.com\",\n" +
+                "  \"name\": \"Jane Doe\",\n" +
+                "  \"address\": \"123 Main St, Cityville\",\n" +
+                "  \"phoneNumber\": \"+1234567890\",\n" +
+                "  \"city\": \"Cityville\"\n" +
+                "}";
+
+        String url = "/api/v1/auth/registeruser";
+
         RestAssured.given()
                 .contentType("application/json")
                 .body(registerRequest)
