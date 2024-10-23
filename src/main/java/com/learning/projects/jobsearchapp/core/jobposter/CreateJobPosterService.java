@@ -8,6 +8,7 @@ import com.learning.projects.jobsearchapp.persistence.entity.JobPoster;
 import com.learning.projects.jobsearchapp.persistence.entity.TechStack;
 import com.learning.projects.jobsearchapp.persistence.repository.JobPosterRepository;
 import com.learning.projects.jobsearchapp.persistence.repository.TechStackRepository;
+import com.learning.projects.jobsearchapp.rest.exception.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class CreateJobPosterService implements CreateJobPosterOperation {
         JobPoster jobPoster = mapper.mapToJobPoster(request);
         Set<TechStack> techStacks =
                 new HashSet<>(techStackRepository.findAllById(request.getTechStackIds()));
+
 
         jobPoster.setApplications(new HashSet<>());
         jobPoster.setPostedDate(LocalDate.now());
